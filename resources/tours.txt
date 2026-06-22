@@ -1,0 +1,5 @@
+Isla Huar;Calbuco;1200
+Puerto Varas;Llanquihue;2500
+Frutillar;Llanquihue;3000
+Parque Vicente Pérez Rosales;Puerto Varas;5000
+Chiloé;Castro;8000
