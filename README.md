@@ -191,7 +191,7 @@ Main.java
 
 # 🚀 Repositorio GitHub
 
-https://github.com/pamarquezb-debug/Llanquihue-Tour-2
+https://github.com/pamarquezb-debug/LlanquihueTourApp
 
 ---
 
