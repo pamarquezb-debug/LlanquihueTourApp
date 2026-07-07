@@ -209,7 +209,7 @@ Contiene archivos de datos utilizados en etapas anteriores del proyecto.
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/pamarquezb-debug/Llanquihue-Tour-2.git
+git clone https://github.com/pamarquezb-debug/LlanquihueTourApp.git
 ```
 
 2. Abrir el proyecto en **IntelliJ IDEA**.
