@@ -4,65 +4,135 @@ import data.GestorEntidades;
 import model.GuiaTuristico;
 import model.Vehiculo;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
 
-/**
- * Clase principal con interfaz gráfica simple.
- */
-public class Main {
+public class Main extends JFrame {
 
-    public static void main(String[] args) {
+    private GestorEntidades gestor;
+    private JList<String> listaMenu;
 
-        GestorEntidades gestor = new GestorEntidades();
-        int opcion;
+    public Main() {
+        gestor = new GestorEntidades();
 
-        do {
-            String menu = """
-                    === LlanquihueTourApp ===
+        setTitle("LlanquihueTourApp");
+        setSize(480, 350);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-                    1. Registrar Guía Turístico
-                    2. Registrar Vehículo
-                    3. Mostrar registros
-                    4. Salir
+        JLabel titulo = new JLabel("LlanquihueTourApp", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        titulo.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+        add(titulo, BorderLayout.NORTH);
 
-                    Seleccione una opción:
-                    """;
+        String[] opciones = {
+                "Registrar Guía Turístico",
+                "Registrar Vehículo",
+                "Mostrar Registros",
+                "Salir"
+        };
 
-            opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
+        listaMenu = new JList<>(opciones);
+        listaMenu.setFont(new Font("Arial", Font.PLAIN, 16));
+        listaMenu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listaMenu.setSelectedIndex(0);
+        listaMenu.setFixedCellHeight(45);
 
-            switch (opcion) {
-                case 1:
-                    String nombre = JOptionPane.showInputDialog("Ingrese nombre del guía:");
-                    String rut = JOptionPane.showInputDialog("Ingrese RUT del guía:");
-                    String especialidad = JOptionPane.showInputDialog("Ingrese especialidad del guía:");
+        JScrollPane scroll = new JScrollPane(listaMenu);
+        scroll.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
+        add(scroll, BorderLayout.CENTER);
 
-                    gestor.agregarEntidad(new GuiaTuristico(nombre, rut, especialidad));
-                    JOptionPane.showMessageDialog(null, "Guía registrado correctamente.");
-                    break;
+        JButton botonSeleccionar = new JButton("Seleccionar");
+        botonSeleccionar.setFont(new Font("Arial", Font.BOLD, 14));
+        botonSeleccionar.addActionListener(e -> ejecutarOpcion());
 
-                case 2:
-                    String patente = JOptionPane.showInputDialog("Ingrese patente del vehículo:");
-                    String tipo = JOptionPane.showInputDialog("Ingrese tipo de vehículo:");
-                    int capacidad = Integer.parseInt(
-                            JOptionPane.showInputDialog("Ingrese capacidad de pasajeros:")
-                    );
+        JPanel panelBoton = new JPanel();
+        panelBoton.add(botonSeleccionar);
+        add(panelBoton, BorderLayout.SOUTH);
 
-                    gestor.agregarEntidad(new Vehiculo(patente, tipo, capacidad));
-                    JOptionPane.showMessageDialog(null, "Vehículo registrado correctamente.");
-                    break;
+        listaMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    ejecutarOpcion();
+                }
+            }
+        });
+    }
 
-                case 3:
-                    JOptionPane.showMessageDialog(null, gestor.mostrarTodasLasEntidades());
-                    break;
+    private void ejecutarOpcion() {
+        String opcion = listaMenu.getSelectedValue();
 
-                case 4:
-                    JOptionPane.showMessageDialog(null, "Programa finalizado.");
-                    break;
+        if (opcion == null) {
+            return;
+        }
 
-                default:
-                    JOptionPane.showMessageDialog(null, "Opción no válida.");
+        switch (opcion) {
+            case "Registrar Guía Turístico":
+                registrarGuia();
+                break;
+
+            case "Registrar Vehículo":
+                registrarVehiculo();
+                break;
+
+            case "Mostrar Registros":
+                mostrarRegistros();
+                break;
+
+            case "Salir":
+                JOptionPane.showMessageDialog(this, "Gracias por utilizar LlanquihueTourApp.");
+                System.exit(0);
+                break;
+        }
+    }
+
+    private void registrarGuia() {
+        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre del guía:");
+        String rut = JOptionPane.showInputDialog(this, "Ingrese el RUT del guía:");
+        String especialidad = JOptionPane.showInputDialog(this, "Ingrese la especialidad:");
+
+        if (nombre != null && rut != null && especialidad != null) {
+            GuiaTuristico guia = new GuiaTuristico(nombre, rut, especialidad);
+            gestor.agregarEntidad(guia);
+
+            JOptionPane.showMessageDialog(this, "Guía turístico registrado correctamente.");
+        }
+    }
+
+    private void registrarVehiculo() {
+        try {
+            String patente = JOptionPane.showInputDialog(this, "Ingrese la patente:");
+            String tipoVehiculo = JOptionPane.showInputDialog(this, "Ingrese el tipo de vehículo:");
+            String capacidadTexto = JOptionPane.showInputDialog(this, "Ingrese la capacidad de pasajeros:");
+
+            if (patente != null && tipoVehiculo != null && capacidadTexto != null) {
+                int capacidad = Integer.parseInt(capacidadTexto);
+
+                Vehiculo vehiculo = new Vehiculo(patente, tipoVehiculo, capacidad);
+                gestor.agregarEntidad(vehiculo);
+
+                JOptionPane.showMessageDialog(this, "Vehículo registrado correctamente.");
             }
 
-        } while (opcion != 4);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número válido.");
+        }
+    }
+
+    private void mostrarRegistros() {
+        JOptionPane.showMessageDialog(
+                this,
+                gestor.mostrarTodasLasEntidades(),
+                "Registros",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Main ventana = new Main();
+            ventana.setVisible(true);
+        });
     }
 }
