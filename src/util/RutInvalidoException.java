@@ -1,4 +1,4 @@
-package utils;
+package util;
 
 /**
  * Excepción personalizada utilizada cuando un RUT

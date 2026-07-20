@@ -1,57 +1,56 @@
-# 🏞️ LlanquihueTourApp
+# 🌋 LlanquihueTourApp
 
-Sistema desarrollado en **Java** utilizando **IntelliJ IDEA** como parte de las evaluaciones de la asignatura **Programación Orientada a Objetos** de **Duoc UC**.
+## Descripción
 
-El proyecto ha evolucionado de forma incremental, incorporando en cada evaluación nuevos conceptos de Programación Orientada a Objetos, como encapsulamiento, manejo de archivos, colecciones, herencia, interfaces, polimorfismo y desarrollo de interfaces gráficas.
+**LlanquihueTourApp** es un sistema desarrollado en Java para gestionar los principales procesos de una agencia de turismo ubicada en la Región de Los Lagos.
 
----
-
-# 👤 Autor
-
-**Nombre:** Pablo Márquez Barría
-
-**Carrera:** Analista Programador
-
-**Institución:** Duoc UC
+El proyecto fue desarrollado aplicando los principios de la Programación Orientada a Objetos (POO), permitiendo administrar personas, servicios turísticos y otras entidades mediante una estructura modular y reutilizable.
 
 ---
 
-# 🎯 Objetivo del proyecto
+## Autor
 
-Desarrollar una aplicación Java que implemente los principios fundamentales de la Programación Orientada a Objetos mediante una arquitectura modular, organizada por paquetes y basada en reutilización de código, herencia, interfaces y polimorfismo.
+**Pablo Márquez Barría**
+
+Ingeniería en Informática  
+Duoc UC
 
 ---
 
-# 📂 Estructura del proyecto
+# Objetivo
+
+Desarrollar un sistema orientado a objetos que permita administrar los servicios turísticos de la agencia Llanquihue Tour, aplicando buenas prácticas de programación, reutilización de código y organización mediante paquetes.
+
+---
+
+# Estructura del proyecto
 
 ```text
-LlanquihueTourApp
+src
 │
-├── src
+├── ui
+│   └── Main.java
 │
 ├── model
-│   ├── Registrable.java
 │   ├── Persona.java
+│   ├── Direccion.java
+│   ├── Rut.java
+│   ├── GuiaTuristico.java
+│   ├── Vehiculo.java
+│   ├── ColaboradorExterno.java
 │   ├── ServicioTuristico.java
 │   ├── RutaGastronomica.java
 │   ├── PaseoLacustre.java
 │   ├── ExcursionCultural.java
-│   ├── GuiaTuristico.java
-│   ├── Vehiculo.java
-│   └── ColaboradorExterno.java
+│   └── Registrable.java
 │
 ├── data
-│   ├── GestorServicios.java
-│   └── GestorEntidades.java
-│
-├── service
-│   └── (clases desarrolladas en evaluaciones anteriores)
+│   ├── GestorEntidades.java
+│   └── GestorServicios.java
 │
 ├── util
-│   └── (clases auxiliares)
-│
-├── ui
-│   └── Main.java
+│   ├── ArchivoUtil.java
+│   └── RutInvalidoException.java
 │
 └── resources
     └── tours.txt
@@ -59,152 +58,230 @@ LlanquihueTourApp
 
 ---
 
-# 📦 Descripción de los paquetes
+# Clases principales
 
-## 📁 model
+## Persona
 
-Contiene las clases que representan las entidades del sistema.
+Clase base que representa a las personas relacionadas con la agencia.
 
-### Interfaces
+Contiene:
 
-* **Registrable**
-
-Define el contrato común mediante el método:
-
-* `mostrarResumen()`
-
-### Jerarquía de Servicios Turísticos
-
-**Superclase**
-
-* ServicioTuristico
-
-**Subclases**
-
-* RutaGastronomica
-* PaseoLacustre
-* ExcursionCultural
-
-### Jerarquía de Personas
-
-**Clase base**
-
-* Persona
-
-**Subclases**
-
-* GuiaTuristico
-* ColaboradorExterno
-
-Además, la clase:
-
-* Vehiculo
-
-implementa la interfaz **Registrable**.
+- Nombre.
+- Objeto `Rut`.
+- Objeto `Direccion`.
 
 ---
 
-## 📁 data
+## Direccion
 
-Contiene las clases encargadas de administrar las colecciones del sistema.
+Representa la dirección de una persona.
 
-### GestorServicios
+Contiene:
 
-Gestiona los servicios turísticos.
+- Calle.
+- Ciudad.
+- Región.
 
-### GestorEntidades
+---
 
-Administra una colección de tipo:
+## Rut
+
+Clase encargada de:
+
+- Validar el formato del RUT.
+- Validar el dígito verificador mediante módulo 11.
+- Formatear el RUT.
+- Lanzar una excepción cuando el RUT es inválido.
+
+---
+
+## GuiaTuristico
+
+Hereda de `Persona`.
+
+Representa un guía turístico con su especialidad.
+
+---
+
+## ColaboradorExterno
+
+Hereda de `Persona`.
+
+Representa colaboradores externos asociados a la agencia y el servicio que prestan.
+
+---
+
+## Vehiculo
+
+Representa los vehículos utilizados para transportar turistas.
+
+---
+
+## ServicioTuristico
+
+Clase padre de los distintos servicios turísticos disponibles.
+
+---
+
+## RutaGastronomica
+
+Especialización de `ServicioTuristico`.
+
+---
+
+## PaseoLacustre
+
+Especialización de `ServicioTuristico`.
+
+---
+
+## ExcursionCultural
+
+Especialización de `ServicioTuristico`.
+
+---
+
+## GestorEntidades
+
+Administra las entidades registradas mediante una colección de objetos.
+
+Permite:
+
+- Registrar entidades.
+- Recorrer las entidades almacenadas.
+- Mostrar todos los registros.
+
+---
+
+## GestorServicios
+
+Gestiona los distintos servicios turísticos disponibles.
+
+---
+
+## ArchivoUtil
+
+Clase auxiliar destinada a la lectura de archivos de texto con datos de prueba.
+
+---
+
+# Conceptos de Programación Orientada a Objetos utilizados
+
+## Encapsulamiento
+
+Los atributos se declaran como privados y se accede a ellos mediante constructores, getters y setters.
+
+---
+
+## Herencia
+
+```text
+Persona
+├── GuiaTuristico
+└── ColaboradorExterno
+
+ServicioTuristico
+├── RutaGastronomica
+├── PaseoLacustre
+└── ExcursionCultural
+```
+
+---
+
+## Polimorfismo
+
+Las entidades se almacenan mediante una colección basada en la interfaz `Registrable`.
 
 ```java
 ArrayList<Registrable>
 ```
 
-Permite:
-
-* Agregar entidades.
-* Recorrer la colección.
-* Aplicar polimorfismo.
-* Identificar el tipo de objeto mediante `instanceof`.
+Esto permite guardar distintos tipos de objetos en una misma colección.
 
 ---
 
-## 📁 ui
+## Interfaces
 
-Contiene la clase **Main**, responsable de iniciar la aplicación y mostrar una interfaz gráfica desarrollada con **JOptionPane**.
+Se implementa la interfaz:
 
----
+```text
+Registrable
+```
 
-## 📁 service
+Cada clase implementa su propia versión del método:
 
-Contiene la lógica de negocio desarrollada en evaluaciones anteriores.
-
----
-
-## 📁 util
-
-Incluye clases auxiliares reutilizables.
+```java
+mostrarResumen()
+```
 
 ---
 
-## 📁 resources
+## Sobrescritura
 
-Contiene archivos de datos utilizados en etapas anteriores del proyecto.
+Se utiliza la anotación:
 
----
+```java
+@Override
+```
 
-# 🛠 Tecnologías utilizadas
-
-* Java
-* IntelliJ IDEA
-* Swing (JOptionPane)
-* Git
-* GitHub
+para redefinir métodos heredados o definidos por una interfaz.
 
 ---
 
-# 🚀 Funcionalidades implementadas
+## Composición
 
-* Organización del proyecto mediante paquetes.
-* Encapsulamiento.
-* Constructores.
-* Getters y Setters.
-* Método `toString()`.
-* Lectura de archivos.
-* Manejo de excepciones.
-* Uso de colecciones (`ArrayList` y `List`).
-* Herencia.
-* Polimorfismo.
-* Interfaces.
-* Sobrescritura de métodos (`@Override`).
-* Uso del operador `instanceof`.
-* Interfaz gráfica utilizando `JOptionPane`.
-* Registro de entidades mediante formularios.
-* Visualización de información desde la interfaz gráfica.
+La clase `Persona` contiene objetos de tipo:
+
+```text
+Rut
+Direccion
+```
+
+De esta manera, los datos no se almacenan solamente como cadenas de texto, sino como objetos con responsabilidades propias.
 
 ---
 
-# 📚 Conceptos aplicados
+## Validación mediante excepciones
 
-* Programación Orientada a Objetos
-* Clases y Objetos
-* Encapsulamiento
-* Constructores
-* Getters y Setters
-* Interfaces
-* Herencia
-* Polimorfismo
-* Sobrescritura de métodos (`@Override`)
-* Uso de `super()`
-* `instanceof`
-* Colecciones (`ArrayList` y `List`)
-* Recorrido con `for-each`
-* Swing (`JOptionPane`)
-* Organización por paquetes
+Se implementa la excepción personalizada:
+
+```text
+RutInvalidoException
+```
+
+Esta excepción se utiliza cuando:
+
+- El RUT está vacío.
+- El formato del RUT no es válido.
+- El dígito verificador es incorrecto.
 
 ---
 
-# ▶️ Cómo ejecutar el proyecto
+# Funcionalidades
+
+- Registrar guías turísticos.
+- Registrar vehículos.
+- Mostrar entidades registradas.
+- Validar automáticamente el RUT.
+- Registrar la dirección de los guías turísticos.
+- Gestionar servicios turísticos.
+- Mostrar información mediante una interfaz gráfica desarrollada con Swing.
+- Utilizar colecciones para almacenar distintos tipos de objetos.
+- Manejar errores mediante excepciones personalizadas.
+
+---
+
+# Tecnologías utilizadas
+
+- Java 17.
+- IntelliJ IDEA.
+- Java Swing.
+- Git.
+- GitHub.
+
+---
+
+# Cómo ejecutar
 
 1. Clonar el repositorio:
 
@@ -212,42 +289,39 @@ Contiene archivos de datos utilizados en etapas anteriores del proyecto.
 git clone https://github.com/pamarquezb-debug/LlanquihueTourApp.git
 ```
 
-2. Abrir el proyecto en **IntelliJ IDEA**.
+2. Abrir el proyecto en IntelliJ IDEA.
 
-3. Ejecutar la clase:
+3. Esperar a que IntelliJ cargue la configuración del proyecto.
 
-```text
-ui/Main.java
-```
-
-4. Utilizar la interfaz gráfica para registrar entidades y visualizar la información almacenada.
-
----
-
-# 📈 Evolución del proyecto
-
-| Evaluación       | Contenido desarrollado                                                                                              |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Evaluación 1     | Organización del proyecto y creación de clases.                                                                     |
-| Evaluación 2     | Encapsulamiento, constructores y métodos.                                                                           |
-| Evaluación 3     | Lectura de archivos y uso de colecciones.                                                                           |
-| Evaluación 4     | Manejo de excepciones y validaciones.                                                                               |
-| Evaluación 5     | Herencia y jerarquía de clases.                                                                                     |
-| Evaluación 6     | Polimorfismo y colección `List<ServicioTuristico>`.                                                                 |
-| **Evaluación 7** | **Interfaces (`Registrable`), `ArrayList<Registrable>`, uso de `instanceof` e interfaz gráfica con `JOptionPane`.** |
-
----
-
-# 🚀 Repositorio GitHub
-
-**Repositorio:**
+4. Ejecutar la clase:
 
 ```text
-https://github.com/pamarquezb-debug/LlanquihueTourApp
+ui.Main
 ```
 
 ---
 
-# 📄 Licencia
+# Estado del proyecto
 
-Proyecto desarrollado con fines académicos para la asignatura **Programación Orientada a Objetos** de **Duoc UC**.
+Proyecto desarrollado como trabajo académico para la asignatura de Programación Orientada a Objetos.
+
+Actualmente incorpora:
+
+- Encapsulamiento.
+- Herencia.
+- Polimorfismo.
+- Interfaces.
+- Composición.
+- Sobrescritura de métodos.
+- Excepciones personalizadas.
+- Validación de RUT.
+- Interfaz gráfica con Swing.
+- Colecciones de objetos.
+- Organización mediante paquetes.
+- Control de versiones con Git y GitHub.
+
+---
+
+# Licencia
+
+Proyecto desarrollado con fines educativos.
